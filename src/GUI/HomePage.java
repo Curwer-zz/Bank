@@ -83,6 +83,7 @@ public class HomePage {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);

@@ -3,6 +3,8 @@ package GUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 public class mySQLeditor {
 
@@ -36,8 +38,17 @@ public class mySQLeditor {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 880, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(454, 11, 400, 539);
+		frame.getContentPane().add(scrollPane);
+		
+		JTextPane textPane = new JTextPane();
+		scrollPane.setViewportView(textPane);
 	}
-
 }
