@@ -24,11 +24,13 @@ import javax.swing.JSpinner;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 
+import DB.database_Reader;
 import arrayStuff.ID;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+
 import javax.swing.JScrollPane;
 
 public class HomePage {
@@ -125,24 +127,17 @@ public class HomePage {
 		JLabel lblOcr = new JLabel("OCR");
 		lblOcr.setBounds(10, 11, 46, 14);
 		saved.add(lblOcr);
-		
+	//	
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 41, 339, 141);
+		scrollPane.setBounds(10, 41, 653, 296);
 		saved.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		database_Reader db = new database_Reader();
+		db.returntransactions();
+		
+		JTextPane textArea = new JTextPane();
 		scrollPane.setViewportView(textArea);
-		
-		JLabel lblPersoner = new JLabel("Personer");
-		lblPersoner.setBounds(10, 193, 46, 14);
-		saved.add(lblPersoner);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 218, 339, 122);
-		saved.add(scrollPane_1);
-		
-		JTextPane textPane = new JTextPane();
-		scrollPane_1.setViewportView(textPane);
+		textArea.setText(db.returntransactions());
 		
 		
 		tabbedPane.add("Överföringar", peym);
