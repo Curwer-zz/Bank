@@ -15,6 +15,42 @@ public class database_Reader {
 	Statement queryCaller = null;
 	Connection con = null;
 	StringBuffer buff = null;
+	
+	public Boolean login(String username, String password){
+		String userN = username;
+		String passW = password;
+		boolean LoginValue = false;
+		String GetUsern = null;
+		String GetPassW = null;
+		
+		
+		try {
+			result = queryCaller.executeQuery("SELECT userName, passWord FROM user");
+			ResultSetMetaData resultInfo = result.getMetaData();
+			int nCols = resultInfo.getColumnCount();
+			result.beforeFirst();
+			buff = new StringBuffer();
+					
+			while(result.next()){	
+				if(userN.equals(result.getString("passWord")) && passW.equals(result.getString("passWord"))){
+					LoginValue = true;
+				}
+				
+			}
+			
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+		return LoginValue;
+		
+		
+	}
 
 	public String returntransactions(){
 		
@@ -23,7 +59,7 @@ public class database_Reader {
 		
 		try {
 			
-			result = queryCaller.executeQuery("SELECT ID, Name, CountryCode, District, Population FROM City");
+			result = queryCaller.executeQuery("SELECT transactionsID, amount, date, TransactionText, AccID FROM transactions");
 			
 			ResultSetMetaData resultInfo = result.getMetaData();
 			int nCols = resultInfo.getColumnCount();
@@ -31,28 +67,20 @@ public class database_Reader {
 			buff = new StringBuffer();
 			while(result.next()){
 				
-				int id = result.getInt("ID");
-				String name = result.getString("Name");
-				String code = result.getString("CountryCode");
-				String distict = result.getString("District");
-				int pop = result.getInt("Population");
-				
-				//display
-				
-//				System.out.println("ID: " + id);
-//				System.out.println("Name: " + name);
-//				System.out.println("CountryCode: " + code);
-//				System.out.println("District: " + distict);
-//				System.out.println("Population: " + pop);
+				int id = result.getInt("transactionsID");
+				int cash = result.getInt("amount");
+				String datum = result.getString("date");
+				String distict = result.getString("TransactionText");
+				int accID = result.getInt("AccID");
 				
 				//Display textPane
 				
-				xxx = "ID: " + id + " " + "\tName: " + name + " " + "\nCountryCode: " + code + " " + "\nDistrict: " + distict + " " + "\nPopulation: " + pop +"\n";
-				//buff.append(xxx);
+				xxx = "ID: " + id + " " + "\nAmount: " + cash + " " + "\nDate: " + datum + " " + "\nAccountID: " + accID + "\nTransactionText: " + distict + "\n";
+				buff.append(xxx);
 	
 			}
 			
-			//stuff = buff.toString();
+			stuff = buff.toString();
 //			
 //			}
 			
@@ -69,11 +97,11 @@ public class database_Reader {
 		MysqlDataSource ds = new MysqlDataSource();
 		ds.setServerName("localhost");
 		ds.setPort(3306);
-		ds.setDatabaseName("world");
+		ds.setDatabaseName("mydb");
 		
 		
 		try {
-			con = ds.getConnection("root", "fiskcarre1");
+			con = ds.getConnection("", "");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Error: Couldn´t connect.. " + e.getMessage());

@@ -140,6 +140,19 @@ public class HomePage {
 		textArea.setText(db.returntransactions());
 		
 		
+		JLabel lblAmount = new JLabel("Amount");
+		lblAmount.setBounds(101, 11, 59, 14);
+		saved.add(lblAmount);
+		
+		JLabel lblDate = new JLabel("Date");
+		lblDate.setBounds(203, 11, 46, 14);
+		saved.add(lblDate);
+		
+		JLabel lblMessage = new JLabel("Message");
+		lblMessage.setBounds(299, 11, 46, 14);
+		saved.add(lblMessage);
+		
+		
 		tabbedPane.add("Överföringar", peym);
 		peym.setLayout(null);
 		

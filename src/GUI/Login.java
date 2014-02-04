@@ -8,14 +8,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 
+import DB.database_Reader;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class Login {
 	
-	private String username = "niclas";
-	private String password = "hejsan";
+	private String username = null;
+	private String password = null;
 	
 	private JTextPane user, pass;
 	
@@ -26,18 +28,18 @@ public class Login {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Login window = new Login();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login window = new Login();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.
@@ -80,10 +82,13 @@ public class Login {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				user.getText();
-				pass.getText();
+				username = user.getText();
+				password = pass.getText();
 				
-				if(user.getText().equals(username) && pass.getText().equals(password)){
+				database_Reader login = new database_Reader();
+				
+				
+				if(login.login(username, password)){
 					home = new HomePage();
 					frame.setVisible(false);
 				}else{
