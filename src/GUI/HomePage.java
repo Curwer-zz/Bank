@@ -33,7 +33,7 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.JScrollPane;
 
-public class HomePage {
+public class HomePage implements ActionListener {
 
 	private JFrame frame;
 	
@@ -45,11 +45,12 @@ public class HomePage {
 	private JTextArea payID, payName, sendcash;
 	private JCheckBox chckbxSpara;
 	private JButton btnSkicka;
-	private JTextPane txtrhrKanMan, value, nickname;
 	
 	private String transfer;
 	
 	private String peymName, peyID;
+	
+	database_Reader db = new database_Reader();
 	
 	ID[] titles;	
 
@@ -98,6 +99,7 @@ public class HomePage {
 		peym.setBackground(Color.WHITE);
 		saved = new JPanel();
 		
+		
 		tabbedPane.add("÷versikt", home);
 		home.setLayout(null);
 		
@@ -105,51 +107,41 @@ public class HomePage {
 		lblKonton.setBounds(10, 11, 46, 14);
 		home.add(lblKonton);
 		
-		txtrhrKanMan = new JTextPane();
-		txtrhrKanMan.setText("1111-888.777-4\n2222-759.957-6\n4896-289.789-3");
-		txtrhrKanMan.setBounds(102, 36, 132, 147);
-		home.add(txtrhrKanMan);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(20, 36, 317, 339);
+		home.add(scrollPane_1);
 		
-		value = new JTextPane();
-		value.setText("42 000 kr\n8 000 kr\n0 kr");
-		value.setBounds(233, 36, 111, 147);
-		home.add(value);
-		
-		nickname = new JTextPane();
-		nickname.setText("Sparkonto\n÷ppetkonto\nSparkonto");
-		nickname.setBounds(10, 36, 92, 147);
-		home.add(nickname);
+		JTextPane textPane = new JTextPane();
+		scrollPane_1.setViewportView(textPane);
 		
 		tabbedPane.add("Betalningar", tran);
 		tabbedPane.add("Mottagarista", saved);
 		saved.setLayout(null);
 		
-		JLabel lblOcr = new JLabel("OCR");
-		lblOcr.setBounds(10, 11, 46, 14);
-		saved.add(lblOcr);
+		JLabel TransID = new JLabel("TransID");
+		TransID.setBounds(10, 11, 66, 14);
+		saved.add(TransID);
 	//	
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 41, 653, 296);
 		saved.add(scrollPane);
 		
-		database_Reader db = new database_Reader();
-		db.returntransactions();
 		
+	
 		JTextPane textArea = new JTextPane();
 		scrollPane.setViewportView(textArea);
 		textArea.setText(db.returntransactions());
 		
-		
 		JLabel lblAmount = new JLabel("Amount");
-		lblAmount.setBounds(101, 11, 59, 14);
+		lblAmount.setBounds(86, 11, 59, 14);
 		saved.add(lblAmount);
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(203, 11, 46, 14);
+		lblDate.setBounds(198, 11, 46, 14);
 		saved.add(lblDate);
 		
 		JLabel lblMessage = new JLabel("Message");
-		lblMessage.setBounds(299, 11, 46, 14);
+		lblMessage.setBounds(300, 11, 84, 14);
 		saved.add(lblMessage);
 		
 		
@@ -210,20 +202,27 @@ public class HomePage {
 		btnSkicka = new JButton("Skicka");
 		btnSkicka.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				if(chckbxSpara.isSelected()) {
-					peyID = payID.getText();
-					peymName = payName.getText();
-					transfer = sendcash.getText(); 
-					
-					titles = new ID[]{
-						new ID(peyID, peymName, transfer)	
-					};
-					
-					ID.testData();
-					
-				} else {
-					System.out.println("Hej");
-				}
+				
+				peyID = payID.getText();
+				int IDpay = Integer.parseInt(peyID);
+				peymName = payID.getText();
+				transfer = sendcash.getText();
+				int trans = Integer.parseInt(transfer);
+				db.transaction(IDpay, trans, peymName);
+//				if(chckbxSpara.isSelected()) {
+//					peyID = payID.getText();
+//					peymName = payName.getText();
+//					transfer = sendcash.getText(); 
+//					
+//					titles = new ID[]{
+//						new ID(peyID, peymName, transfer)	
+//					};
+//					
+//					ID.testData();
+//					
+//				} else {
+//					System.out.println("Hej");
+//				}
 			}
 	
 		});
@@ -238,6 +237,12 @@ public class HomePage {
 		JLabel lblverfra = new JLabel("\u00D6verf\u00F6ra:");
 		lblverfra.setBounds(203, 57, 63, 14);
 		peym.add(lblverfra);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }
